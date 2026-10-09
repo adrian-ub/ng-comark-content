@@ -1,3 +1,159 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+body {
+  @apply m-0 bg-[#f6f4ef] text-[#17221d];
+}
+
+/* Comark's rendered document follows the same quiet editorial palette as ng-comark-content. */
+.prose {
+  color: #344239;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  color: #17221d;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.prose h1 {
+  @apply mb-6 mt-0 text-4xl;
+}
+
+.prose h2 {
+  @apply mb-3 mt-12 text-3xl;
+}
+
+.prose h3 {
+  @apply mb-2 mt-8 text-2xl;
+}
+
+.prose p {
+  @apply mb-6;
+}
+
+.prose a {
+  @apply font-medium text-[#c94f31] underline decoration-[#e5a18f] decoration-2 underline-offset-4 transition-colors hover:text-[#17221d];
+}
+
+.prose strong {
+  @apply font-semibold text-[#17221d];
+}
+
+.prose ul {
+  @apply mb-6 list-disc space-y-2 pl-7;
+}
+
+.prose ol {
+  @apply mb-6 list-decimal space-y-2 pl-7;
+}
+
+.prose li {
+  @apply pl-1;
+}
+
+.prose blockquote {
+  @apply my-8 border-l-4 border-[#d95f3d] bg-[#eee9df] px-6 py-4 font-serif text-xl italic text-[#647067];
+}
+
+.prose code {
+  @apply rounded bg-[#e8e5dc] px-1.5 py-0.5 font-mono text-sm text-[#9a412b];
+}
+
+.prose pre {
+  @apply mb-8 overflow-x-auto rounded-none border border-[#303c35] bg-[#17221d] p-5 text-sm leading-7 text-[#edf1e9];
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.prose table {
+  @apply mb-8 w-full border-collapse text-base;
+}
+
+.prose th {
+  @apply border border-[#cfd5ca] bg-[#e8e5dc] px-4 py-3 text-left font-mono text-xs uppercase tracking-widest text-[#344239];
+}
+
+.prose td {
+  @apply border border-[#d9ddd3] px-4 py-3;
+}
+
+.prose tr:nth-child(even) {
+  @apply bg-[#faf9f5];
+}
+
+.shiki span.line.highlight {
+  display: inline-block;
+  width: calc(100% + 2.5rem);
+  margin: 0 -1.25rem;
+  padding: 0 1.25rem;
+  background-color: rgb(217 95 61 / 15%);
+}
+
+.prose pre[filename]::before {
+  content: attr(filename);
+  @apply mb-3 block border-b border-[#526057] pb-3 font-mono text-xs text-[#aab6ac];
+}
+
+.prose blockquote[as] {
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: normal;
+}
+
+.prose blockquote[as]::before {
+  @apply mb-1 block font-mono text-xs font-bold uppercase tracking-widest;
+}
+
+.prose blockquote[as='note'] {
+  @apply border-[#4f86a8] bg-[#e8f0f4] text-[#285875];
+}
+
+.prose blockquote[as='note']::before {
+  content: 'Note';
+}
+
+.prose blockquote[as='tip'] {
+  @apply border-[#5b8a62] bg-[#e8f0e6] text-[#315c37];
+}
+
+.prose blockquote[as='tip']::before {
+  content: 'Tip';
+}
+
+.prose blockquote[as='warning'] {
+  @apply border-[#b2873e] bg-[#f5edda] text-[#76591f];
+}
+
+.prose blockquote[as='warning']::before {
+  content: 'Warning';
+}
+
+.prose blockquote[as='caution'] {
+  @apply border-[#b55245] bg-[#f6e5e1] text-[#80352c];
+}
+
+.prose blockquote[as='caution']::before {
+  content: 'Caution';
+}
+
+.prose blockquote[as='important'] {
+  @apply border-[#8064a6] bg-[#eee9f5] text-[#55407a];
+}
+
+.prose blockquote[as='important']::before {
+  content: 'Important';
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prose a {
+    transition: none;
+  }
+}

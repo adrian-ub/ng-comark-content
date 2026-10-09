@@ -1,5 +1,7 @@
 # NgComarkContent
 
+An Angular SSR blog example powered by [`comark-content`](https://content.comark.dev). It loads Markdown posts from `content/posts`, exposes them through a typed content service, renders them with Comark, and uses Rangi for syntax highlighting. The project also demonstrates `TransferState`, prerendered post pages, live content updates during development, and generated TypeScript types for content autocomplete.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
 
 ## Development server

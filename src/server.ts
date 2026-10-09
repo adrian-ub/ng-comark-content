@@ -6,11 +6,67 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { content } from '../content';
+import { writeSourceTypes } from 'comark-content/build';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+const contentClients = new Set<import('node:http').ServerResponse>();
+let typeGeneration = Promise.resolve();
+
+const regenerateTypes = () => {
+  typeGeneration = typeGeneration
+    .then(async () => {
+      await writeSourceTypes(content);
+    })
+    .catch((error: unknown) => {
+      console.error('[content] failed to generate types', error);
+    });
+};
+
+const notifyContentClients = () => {
+  for (const client of contentClients) {
+    client.write('data: {}\n\n');
+  }
+};
+
+content.hooks.hook('watch:file:update', notifyContentClients);
+content.hooks.hook('watch:file:remove', notifyContentClients);
+content.hooks.hook('watch:file:update', regenerateTypes);
+content.hooks.hook('watch:file:remove', regenerateTypes);
+
+void content
+  .init()
+  .then(() => writeSourceTypes(content))
+  .then(() => content.watch())
+  .catch((error: unknown) => {
+    console.error('[content] failed to initialize', error);
+  });
+
+app.get('/__content_hmr', (_req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+  res.write('retry: 1000\n\n');
+  contentClients.add(res);
+  res.on('close', () => contentClients.delete(res));
+});
+
+app.use('/api/content', async (req, res, next) => {
+  try {
+    const response = await content.handler(
+      new Request(`http://${req.headers.host ?? 'localhost'}${req.originalUrl}`),
+    );
+    res.status(response.status);
+    response.headers.forEach((value, key) => res.setHeader(key, value));
+    res.send(Buffer.from(await response.arrayBuffer()));
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.

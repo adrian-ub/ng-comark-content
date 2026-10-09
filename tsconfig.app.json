@@ -8,6 +8,8 @@
     ]
   },
   "include": [
+    "comark-content.d.ts",
+    "content.ts",
     "src/**/*.ts"
   ],
   "exclude": [
