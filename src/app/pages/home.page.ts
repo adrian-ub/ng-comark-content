@@ -31,13 +31,13 @@ import { ContentService } from '../content';
             @for (post of posts.value(); track post.path; let index = $index) {
               <a [routerLink]="['/posts', post.meta.stem.split('/').pop()]" class="group border-b border-[#d9ddd3] py-8 first:border-t md:nth-[2]:border-t">
                 <div class="mb-5 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-[#9aa39b]">
-                  <span>{{ post.data.category }}</span>
-                  <span>{{ post.data.date }}</span>
+                  <span>{{ post.data['category'] }}</span>
+                  <span>{{ post.data['date'] }}</span>
                 </div>
                 <h3 class="text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#17221d] transition-colors group-hover:text-[#d95f3d]">
-                  {{ post.data.title }}
+                  {{ post.data['title'] }}
                 </h3>
-                <p class="mt-4 max-w-md leading-7 text-[#647067]">{{ post.data.description }}</p>
+                <p class="mt-4 max-w-md leading-7 text-[#647067]">{{ post.data['description'] }}</p>
                 <span class="mt-7 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-[#d95f3d]">
                   Read note <span class="transition-transform group-hover:translate-x-1">→</span>
                 </span>
